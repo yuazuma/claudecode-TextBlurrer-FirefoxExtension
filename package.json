@@ -1,7 +1,7 @@
 {
   "name": "text-blurrer-firefox",
   "description": "Text Blurrer Firefox Extension",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "scripts": {
     "clean": "node -e \"require('fs-extra').removeSync('./dist')\"",
     "build:mkdir": "node -e \"const fs = require('fs-extra'); fs.ensureDirSync('./dist/popup/js'); fs.ensureDirSync('./dist/contentScript'); fs.ensureDirSync('./dist/background');\"",

@@ -51,7 +51,7 @@ export class DOMBlurrer implements IBlurrer {
     const observed = target || document.body;
 
     const style = document.createElement('style');
-    style.innerHTML = BLURRER_COMMON_STYLE;
+    style.textContent = BLURRER_COMMON_STYLE;
     style.id = ID_BLURRER_COMMON_STYLE;
     !observed.querySelector(`#${style.id}`) && (observed == document.body ? document.head : observed).appendChild(style);
     this.observedNodes.push(observed);

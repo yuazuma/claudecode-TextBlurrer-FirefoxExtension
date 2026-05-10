@@ -350,3 +350,119 @@ Signed xpi downloaded: web-ext-artifacts/aa268e0faa664fe99a12-0.2.6.xpi
 **アシスタント:**
 
 本ファイル（`docs/prompt.md`）と `docs/thinking.md` を作成しました。APIキー・シークレットはマスク化済みです。
+
+---
+
+## ターン9
+
+**ユーザー:**
+
+以下のテスト結果を受けて、ソースコードを修正してください。
+
+```
+The "data_collection_permissions" property is missing.
+警告: The "/browser_specific_settings/gecko/data_collection_permissions" property is required for all new Firefox extensions, and will be required for new versions of existing extensions in the future. Please add this key to the manifest. More information at: https://mzl.la/firefox-builtin-data-consent
+manifest.json
+
+Unsafe assignment to innerHTML
+警告: Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.
+dist/popup/js/bundle.js 行: 7 列: 1169
+
+Unsafe assignment to innerHTML
+警告: Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.
+dist/contentScript/main.js 行: 4 列: 575
+
+Unsafe assignment to innerHTML
+警告: Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly sacred performance degradation.
+dist/contentScript/main.js 行: 20 列: 109
+```
+
+---
+
+**アシスタント:**
+
+ソースコードを調査し、以下の修正を実施しました。
+
+### 修正1：`innerHTML` → `textContent`（5箇所）
+
+`<style>` 要素へのCSS代入はすべて `innerHTML` ではなく `textContent` で安全に行えます。
+
+| ファイル | 箇所 | 修正内容 |
+|---|---|---|
+| `src/content/blurrer/DOMBlurrer.ts` | 1箇所 | `style.innerHTML` → `style.textContent` |
+| `src/content/blurrer/InputBlurrer.ts` | 1箇所 | `style.innerHTML` → `style.textContent` |
+| `src/popup/popup.ts` | 3箇所 | `style.innerHTML` → `style.textContent` |
+
+修正後、ソース全体に `innerHTML` が0件であることを確認しました。
+
+### 修正2：`manifest.json` に `data_collection_permissions` を追加
+
+```json
+"browser_specific_settings": {
+  "gecko": {
+    "id": "text-blurrer@horihiro.github.io",
+    "strict_min_version": "140.0",
+    "data_collection_permissions": {
+      "required": ["none"],
+      "optional": []
+    }
+  }
+}
+```
+
+- `required: ["none"]` — データを収集しないことを明示（空配列はAMOバリデーションエラーになるため）
+- `strict_min_version` を `109.0` → `140.0` に更新（`data_collection_permissions` は Firefox 140 以降の機能）
+
+### 再署名（バージョン競合への対応）
+
+修正後に再署名を試みたところ、AMO に 0.2.6 がすでに登録済みのためバージョン競合が発生しました。
+
+```
+Submission failed (2): Conflict
+{ "version": ["Version 0.2.6 already exists."] }
+```
+
+`manifest.json` と `package.json` のバージョンを `0.2.6` → `0.2.7` に更新して再署名しました。
+
+```
+Waiting for validation...
+Waiting for approval...
+Signed xpi downloaded: web-ext-artifacts/aa268e0faa664fe99a12-0.2.7.xpi
+```
+
+**生成ファイル：** `web-ext-artifacts/aa268e0faa664fe99a12-0.2.7.xpi`
+
+---
+
+## ターン10
+
+**ユーザー:**
+
+0.2.7版のzipファイルを生成してください。
+
+---
+
+**アシスタント:**
+
+`npm run package` を実行しました。
+
+```
+Building web extension from .
+Your web extension is ready: web-ext-artifacts\text_blurrer-0.2.7.zip
+```
+
+**生成ファイル：** `web-ext-artifacts/text_blurrer-0.2.7.zip`
+
+---
+
+## ターン11
+
+**ユーザー:**
+
+ターン9以降のプロンプトと応答を docs/prompt.md に追記してください。また、思考過程は docs/thinking.md に書き出してください。いずれも、APIシークレットなどの機微情報は、マスク化してください。
+
+---
+
+**アシスタント:**
+
+`docs/prompt.md` にターン9〜11を追記し、`docs/thinking.md` にターン9〜11の思考過程を追記しました。

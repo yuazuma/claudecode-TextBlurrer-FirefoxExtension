@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', async (e) => {
     }
 
     const style = document.querySelector(`head > style#style-${e.target.id}`);
-    style && (style.innerHTML = `
+    style && (style.textContent = `
 textarea#${e.target.id} {
   background: linear-gradient(
   ${bgColors.join(',\n  ')}
@@ -260,9 +260,9 @@ textarea#${e.target.id} {
     });
     if (!e.target.checked) {
       const inputStyle = document.querySelector(`head > style#style-${patternInput.id}`);
-      inputStyle && (inputStyle.innerHTML = '')
+      inputStyle && (inputStyle.textContent = '')
       const textAreaStyle = document.querySelector(`head > style#style-${exclusionTextArea.id}`);
-      textAreaStyle && (textAreaStyle.innerHTML = '')
+      textAreaStyle && (textAreaStyle.textContent = '')
       return;
     }
 

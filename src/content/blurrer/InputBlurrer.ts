@@ -31,7 +31,7 @@ export class InputBlurrer extends DOMBlurrer {
     const observed = target || document.body;
 
     const style = document.createElement('style');
-    style.innerHTML = BLURRER_INPUT_STYLE;
+    style.textContent = BLURRER_INPUT_STYLE;
     style.id = ID_BLURRER_INPUT_STYLE;
     !observed.querySelector(`#${style.id}`) && (observed == document.body ? document.head : observed).appendChild(style);
     this.observedNodes.push(observed);
