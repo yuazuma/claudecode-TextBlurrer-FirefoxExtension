@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Text Blurrer Popup</title>
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+  <script src="./js/bundle.js" type="module"></script>
+</head>
+
+<body>
+  <div id="toggleButton">
+    <label class="switch">
+      <input type="checkbox" id="statusCheckbox">
+      <span class="slider"></span>
+    </label>
+    <span>Enabled</span>
+  </div>
+
+  <input id="tab-keywords" type="radio" role="tab" name="tab-radio" class="tab-input" value="keywords" checked="">
+  <h4 class="tab-label-heading selected"><label class="tab-label" for="tab-keywords">Blurring keywords</label></h4>
+  <input id="tab-exclusion" type="radio" role="tab" name="tab-radio" class="tab-input" value="urls">
+  <h4 class="tab-label-heading"><label class="tab-label" for="tab-exclusion">Exclusion URL patterns</label></h4>
+
+  <div class="settings-conainer tab-panel" role="tab-panel" id="tab-panel-keywords">
+
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" class="custom-checkbox blur-title" id="blurTitleCheckbox">
+        <span title="Blur title of tabs"></span>
+      </label>
+      <label>
+        <input type="checkbox" class="custom-checkbox blur-input" id="blurInputCheckbox">
+        <span title="Blur value of `input` tag"></span>
+      </label>
+      <label>
+        <input type="checkbox" class="custom-checkbox show-value" id="showValueCheckbox">
+        <span title="Show value on mouseover"></span>
+      </label>
+      <label>
+        <input type="checkbox" class="custom-checkbox case-sensitive" id="caseCheckbox">
+        <span title="Match case"></span>
+      </label>
+      <label>
+        <input type="checkbox" class="custom-checkbox mode-regexp" id="regexpCheckbox">
+        <span title="Use Regular Expression"></span>
+      </label>
+    </div>
+
+    <textarea title="" id="patternInput" placeholder="" rows="10"></textarea>
+
+  </div>
+  <div class="settings-conainer tab-panel" role="tab-panel" id="tab-panel-exclusion">
+    <div class="footer">
+      <span id="addUrlsInCurrentTab">+ Add URLs in the current tab</span>
+    </div>
+    <textarea title="" id="exclusionTextArea" placeholder="" rows="10"></textarea>
+  </div>
+  <div class="footer">
+    <div id="linkContainer">
+      <div id="linkWrapper">
+        <a href="https://github.com/horihiro/TextBlurrer-ChromeExtension/issues/new?template=bug_report.md" target="_blank"
+          rel="noopener noreferrer">Report an issue<img src="./img/arrow.svg" /></a><br>
+      </div>
+    </div>
+    <div class="button-container">
+      <button id="applyButton">apply</button>
+    </div>
+  </div>
+  <textarea id="_bufferTextArea"></textarea>
+</body>
+
+</html>

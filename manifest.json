@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Text Blurrer",
+  "version": "0.2.6",
+  "description": "Blurring sensitive specified text/keyword.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "text-blurrer@horihiro.github.io",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
+  "background": {
+    "scripts": ["dist/background/service-worker.js"]
+  },
+  "action": {
+    "default_icon": "img/icon128.png",
+    "default_popup": "dist/popup/main.html"
+  },
+  "icons": {
+    "16": "img/icon16.png",
+    "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "dist/contentScript/main.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "util/common.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
